@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+        
+    }
+  ],
+  "novels": [
+    {
+      "id": 1,
+      "title": "",
+      "genre": "",
+      "coverImg": "",
+      "synopsis": ""
+    }
+  ]
+}
