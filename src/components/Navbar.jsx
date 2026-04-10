@@ -1,50 +1,67 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';
+import { AppBar, Toolbar, Typography, Button, Box, TextField } from '@mui/material';
 
-const Navbar = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+const Navbar = ({ darkMode, setDarkMode }) => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  };
 
   const handleSearch = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (searchQuery.trim()) {
-      console.log("Searching for:", searchQuery);
+      navigate(`/search?q=${searchQuery}`);
       setSearchQuery(''); 
     }
   };
 
   return (
-    <header className="navbar">
-      <div className="navbar-logo">
-        <Link to="/">NovelHaven</Link>
-      </div>
-      
-      <nav className="navbar-links">
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/browse">Browse</Link></li>
-          <li><Link to="/library">Library</Link></li>
-        </ul>
-      </nav>
+    <AppBar position="sticky" color="inherit" elevation={2}>
+      <Toolbar>
+        <Typography variant="h5" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', fontWeight: '900', letterSpacing: 1 }}>
+          MugNovel
+        </Typography>
 
-      <div className="navbar-actions">
-        <form onSubmit={handleSearch} className="search-form">
-          <input 
-            type="text" 
-            placeholder="Search novels..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-input"
-          />
-          <button type="submit" className="search-btn">🔍</button>
-        </form>
-        
-        <Link to="/login">
-          <button className="login-btn">Sign In</button>
-        </Link>
-      </div>
-    </header>
+        <Box sx={{ display: 'flex', gap: { xs: 1, md: 3 }, alignItems: 'center' }}>
+          
+          <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
+            <TextField
+              size="small"
+              placeholder="Search novels..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              variant="outlined"
+              sx={{ bgcolor: darkMode ? '#2a2a40' : '#fff', borderRadius: 1 }}
+            />
+            <Button type="submit" sx={{ ml: 1, minWidth: '40px' }} variant="contained">
+              🔍
+            </Button>
+          </form>
+
+          <Button component={Link} to="/browse" color="inherit">Browse</Button>
+          <Button component={Link} to="/library" color="inherit">Library</Button>
+          
+          <Button onClick={() => setDarkMode(!darkMode)} color="inherit" sx={{ minWidth: '90px' }}>
+            {darkMode ? '☀️ Light' : '🌙 Dark'}
+          </Button>
+
+          {user ? (
+            <Button onClick={handleLogout} variant="outlined" color="primary">
+              Sign Out ({user.username})
+            </Button>
+          ) : (
+            <Button component={Link} to="/login" variant="contained" color="primary">
+              Sign In
+            </Button>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

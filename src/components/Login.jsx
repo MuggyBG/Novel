@@ -5,7 +5,7 @@ import { TextField, Button, Container, Typography, Box, Alert } from '@mui/mater
 import { useNavigate, Link } from 'react-router-dom';
 
 const validationSchema = yup.object({
-  email: yup.string().email('Enter a valid email').required('Email is required'),
+  identifier: yup.string().required('Username or Email is required'),
   password: yup.string().required('Password is required'),
 });
 
@@ -21,18 +21,23 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const res = await fetch(`http://localhost:5173/users?email=${values.email}&password=${values.password}`);
+        const res = await fetch(`http://localhost:5174/users`);
         const users = await res.json();
 
-        if (users.length > 0) {
-          const loggedInUser = users[0];
-          localStorage.setItem('user', JSON.stringify(loggedInUser));
+        const userMatch = users.find(u =>
+          (u.email === values.identifier || u.username === values.identifier) &&
+          u.password === values.password
+        );
+
+        if (userMatch) {
+          localStorage.setItem('user', JSON.stringify(userMatch));
           navigate('/');
+          window.location.reload(); 
         } else {
-          setErrorMsg('Invalid email or password.');
+          setErrorMsg('Invalid credentials.');
         }
       } catch (err) {
-        setErrorMsg('Server error. Is JSON Server running?');
+        setErrorMsg('Database offline.');
       }
     },
   });

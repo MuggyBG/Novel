@@ -1,16 +1,44 @@
 {
   "users": [
     {
-        
+      "username": "MugetsuBG",
+      "email": "asd@asd.asd",
+      "password": "sgasga",
+      "id": "Fr2zyF3Oquo"
     }
   ],
   "novels": [
     {
-      "id": 1,
-      "title": "",
-      "genre": "",
-      "coverImg": "",
-      "synopsis": ""
+      "id": "1",
+      "title": "God-Tier Providence System",
+      "author": "Taleseeker",
+      "status": "Ongoing",
+      "genres": [
+        "Fantasy",
+        "Action",
+        "System"
+      ],
+      "coverImg": "https://via.placeholder.com/200x280?text=Novel+Cover",
+      "synopsis": "When Alex woke up, he discovered he had transmigrated...",
+      "chapters": [
+        {
+          "id": "1",
+          "title": "Chapter 1: The Villain Awakens"
+        },
+        {
+          "id": "2",
+          "title": "Chapter 2: The Providence System"
+        }
+      ]
     }
-  ]
+  ],
+  "chapterContent": [
+    {
+      "id": "1",
+      "novelId": "1",
+      "title": "Chapter 1",
+      "content": "“Your Majesty, Knox and I are deeply in love, and I will marry no one but him. If Your Majesty does not agree, I, Isolde, will sever all ties with the Hale family and leave this family right now!”\n\nThe sharp, unwavering declaration rang through the grand hall like a blade drawn from its sheath.\n\nAlex woke up to that voice.\n\nFor a brief instant, his mind was empty—no cultivation, no enemies, no schemes—only the echo of a woman’s resolve vibrating against marble pillars."
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

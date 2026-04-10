@@ -23,14 +23,14 @@ const Register = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const checkRes = await fetch(`http://localhost:5173/users?email=${values.email}`);
+        const checkRes = await fetch(`http://localhost:5174/users?email=${values.email}`);
         const existingUsers = await checkRes.json();
         
         if (existingUsers.length > 0) {
           setErrorMsg('An account with this email already exists.');
           return;
         }
-        const res = await fetch('http://localhost:5173/users', {
+        const res = await fetch('http://localhost:5174/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(values),
@@ -49,7 +49,7 @@ const Register = () => {
     <Container maxWidth="xs">
       <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', bgcolor: 'white', p: 4, borderRadius: 2 }}>
         <Typography component="h1" variant="h5" color="primary">
-          Register for NovelHaven
+          Register for MugNovel
         </Typography>
         
         {errorMsg && <Alert severity="error" sx={{ width: '100%', mt: 2 }}>{errorMsg}</Alert>}
