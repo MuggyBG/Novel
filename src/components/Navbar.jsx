@@ -42,7 +42,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             />
             <Button type="submit" sx={{ ml: 1, minWidth: '40px' }} variant="contained">🔍</Button>
           </form>
-
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
           <Button component={Link} to="/browse/1" color="inherit">Browse</Button>
 
           <Button onClick={() => setDarkMode(!darkMode)} color="inherit" sx={{ minWidth: '90px' }}>

@@ -6,6 +6,13 @@
       "email": "test@test.com",
       "password": "password123",
       "role": "admin"
+    },
+    {
+      "username": "asd",
+      "email": "asd@asd.asd",
+      "password": "asdasdasd",
+      "role": "user",
+      "id": "4sYTDeGWiPA"
     }
   ],
   "novels": [

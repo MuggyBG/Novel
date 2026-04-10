@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 
 import Navbar from './components/Navbar';
 import Login from './components/Login';
@@ -14,6 +14,7 @@ import Home from './components/Home';
 import Search from './components/Search'; 
 import AdminDashboard from './components/AdminDashboard';
 import AdminRoute from './components/AdminRoute';
+import Footer from './components/Footer'
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -22,7 +23,7 @@ function App() {
       mode: darkMode ? 'dark' : 'light',
       primary: { main: '#747bff' },
       background: {
-        default: darkMode ? '#121212' : '#f5f5f5',
+        default: darkMode ? '#121212' : '#a7cdd6',
         paper: darkMode ? '#1e1e2f' : '#ffffff',
       },
     },
@@ -31,6 +32,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <main>
         <Routes>
@@ -47,7 +49,10 @@ function App() {
       </AdminRoute>}/>
           <Route path="*" element={<Home />} />
         </Routes>
+        
       </main>
+      <Footer/>
+      </Box>
     </ThemeProvider>
   );
 }
