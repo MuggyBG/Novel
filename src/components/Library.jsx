@@ -1,54 +1,114 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Button, Paper } from '@mui/material';
+import { Container, Typography, Grid, Card, CardActionArea, CardContent, Box, Button, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Library = () => {
-  const [user, setUser] = useState(null);
+  const [savedLibrary, setSavedLibrary] = useState([]);
+  const [readingHistory, setReadingHistory] = useState([]);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser));
-    }
+    const saved = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+    setSavedLibrary(saved);
+
+    const historyObj = JSON.parse(localStorage.getItem('readingHistory')) || {};
+    const historyArray = Object.values(historyObj).sort((a, b) => {
+      return new Date(b.lastReadDate) - new Date(a.lastReadDate);
+    });
+    setReadingHistory(historyArray);
   }, []);
 
   if (!user) {
     return (
-      <Container maxWidth="sm" sx={{ mt: 8 }}>
-        <Paper elevation={3} sx={{ p: 4, textAlign: 'center', bgcolor: '#2a2a40', color: 'white' }}>
-          <Typography variant="h5" gutterBottom>
-            You must be signed in to view your library.
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 3, color: '#a9a9bc' }}>
-            Log in to save your favorite novels and track your reading progress.
-          </Typography>
-          <Button variant="contained" component={Link} to="/login" sx={{ bgcolor: '#747bff', '&:hover': { bgcolor: '#535bf2' } }}>
-            Go to Sign In
-          </Button>
-        </Paper>
+      <Container sx={{ mt: 10, textAlign: 'center' }}>
+        <Typography variant="h5" color="text.primary">
+          Please sign in to view your library.
+        </Typography>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Box sx={{ borderBottom: '1px solid #3f3f5a', pb: 2, mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ color: 'white', fontWeight: 'bold' }}>
-          Welcome back, {user.username}!
+    <Container sx={{ mt: 5, mb: 8, minHeight: '60vh' }}>
+      <Typography variant="h4" fontWeight="bold" color="text.primary" gutterBottom>
+        Welcome back, {user.username}!
+      </Typography>
+      <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
+        Your personal reading dashboard.
+      </Typography>
+
+      <Box sx={{ bgcolor: 'background.paper', p: 4, borderRadius: 2, boxShadow: 1, mb: 5 }}>
+        <Typography variant="h5" fontWeight="bold" color="text.primary" gutterBottom>
+          Continue Reading
         </Typography>
-        <Typography variant="subtitle1" sx={{ color: '#a9a9bc' }}>
-          Here is your personal reading library.
-        </Typography>
+        <Divider sx={{ mb: 3 }} />
+
+        {readingHistory.length === 0 ? (
+          <Typography variant="body1" color="text.secondary">
+            You haven't read any chapters yet.
+          </Typography>
+        ) : (
+          <Grid container spacing={3}>
+            {readingHistory.map(record => (
+              <Grid item xs={12} sm={6} md={4} key={record.novelId}>
+                <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" noWrap fontWeight="bold" color="text.primary">
+                      {record.novelTitle}
+                    </Typography>
+                    <Typography variant="body2" color="primary.main" sx={{ mt: 1, mb: 2 }}>
+                      Reached: Chapter {record.chapterNumber}
+                    </Typography>
+                  </CardContent>
+                  <Box sx={{ p: 2, pt: 0 }}>
+                    <Button 
+                      variant="contained" 
+                      color="primary" 
+                      fullWidth
+                      component={Link} 
+                      to={`/novels/${record.novelId}/${record.chapterId}`}
+                    >
+                      Continue Reading
+                    </Button>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
 
-      <Paper sx={{ p: 4, textAlign: 'center', bgcolor: '#2a2a40', color: '#a9a9bc' }}>
-        <Typography variant="body1">
-          Your library is currently empty. Go to the Browse page to find some novels!
+      <Box sx={{ bgcolor: 'background.paper', p: 4, borderRadius: 2, boxShadow: 1 }}>
+        <Typography variant="h5" fontWeight="bold" color="text.primary" gutterBottom>
+          Saved Novels
         </Typography>
-        <Button variant="outlined" component={Link} to="/browse" sx={{ mt: 2, color: '#747bff', borderColor: '#747bff' }}>
-          Browse Novels
-        </Button>
-      </Paper>
+        <Divider sx={{ mb: 3 }} />
+
+        {savedLibrary.length === 0 ? (
+          <Typography variant="body1" color="text.secondary">
+            Your saved library is empty.
+          </Typography>
+        ) : (
+          <Grid container spacing={3}>
+            {savedLibrary.map(novel => (
+              <Grid item xs={12} sm={6} md={3} key={novel.id}>
+                <Card>
+                  <CardActionArea component={Link} to={`/novels/${novel.id}`}>
+                    <CardContent>
+                      <Typography variant="h6" noWrap fontWeight="bold" color="text.primary">
+                        {novel.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        By {novel.author}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
     </Container>
   );
 };

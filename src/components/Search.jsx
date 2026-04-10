@@ -25,9 +25,9 @@ const Search = () => {
     fetch(`http://localhost:5174/novels`)
       .then(res => res.json())
       .then(data => {
-        // Now, let React do the filtering!
+        const actualNovels = Array.isArray(data) ? data : (data.data || []);
         const lowerCaseQuery = query.toLowerCase();
-        const filteredNovels = data.filter(novel => {
+        const filteredNovels = actualNovels.filter(novel => {
           const matchTitle = novel.title?.toLowerCase().includes(lowerCaseQuery);
           const matchAuthor = novel.author?.toLowerCase().includes(lowerCaseQuery);
           const matchGenre = novel.genres?.some(g => g.toLowerCase().includes(lowerCaseQuery));

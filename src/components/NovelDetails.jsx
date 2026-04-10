@@ -2,81 +2,84 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   Container, Typography, Grid, Box, Button, Paper, 
-  Chip, Divider, Breadcrumbs, CircularProgress 
+  Chip, Divider, Breadcrumbs, CircularProgress, Snackbar, Alert 
 } from '@mui/material';
 
 const NovelDetails = () => {
   const { id } = useParams();
   const [novel, setNovel] = useState(null);
+  const [chapters, setChapters] = useState([]);
   const [sortAsc, setSortAsc] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [isInLibrary, setIsInLibrary] = useState(false);
+  const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
+    const currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+    setIsInLibrary(currentLibrary.some(n => String(n.id) === String(id)));
+
     setLoading(true);
-    fetch(`http://localhost:5174/novels/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Database offline or ID missing");
-        return res.json();
-      })
-      .then(data => {
-        if (Object.keys(data).length === 0) {
-          setNovel(null);
-        } else {
-          setNovel(data);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching novel:", err);
-        setNovel(null);
-        setLoading(false);
-      });
+    
+    Promise.all([
+      fetch(`http://localhost:5174/novels/${id}`).then(res => res.ok ? res.json() : null),
+      fetch(`http://localhost:5174/chapters`).then(res => res.ok ? res.json() : []) // <--- Notice we removed the ?novelId= part
+    ])
+    .then(([novelData, allChaptersData]) => {
+      setNovel(novelData && Object.keys(novelData).length > 0 ? novelData : null);
+      
+      const matchingChapters = allChaptersData.filter(chapter => String(chapter.novelId) === String(id));
+      setChapters(matchingChapters);
+      
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error("Error fetching data:", err);
+      setNovel(null);
+      setLoading(false);
+    });
   }, [id]);
 
-  const handleAddToLibrary = () => {
+  const toggleLibrary = () => {
     const user = localStorage.getItem('user');
     if (!user) {
-      alert('Please sign in to add to your library!');
+      setToast({ open: true, message: 'Please sign in to manage your library!', severity: 'warning' });
       return;
     }
-    const currentLibrary = JSON.parse(localStorage.getItem('library')) || [];
-    if (!currentLibrary.find(n => n.id === novel?.id)) {
-      currentLibrary.push(novel);
-      localStorage.setItem('library', JSON.stringify(currentLibrary));
-      alert('Added to Library!');
+
+    let currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+    
+    if (isInLibrary) {
+      currentLibrary = currentLibrary.filter(n => String(n.id) !== String(novel.id));
+      setIsInLibrary(false);
+      setToast({ open: true, message: 'Removed from Library', severity: 'info' });
     } else {
-      alert('Already in your Library!');
+      currentLibrary.push(novel);
+      setIsInLibrary(true);
+      setToast({ open: true, message: 'Added to Library!', severity: 'success' });
     }
+    
+    localStorage.setItem('savedLibrary', JSON.stringify(currentLibrary));
   };
 
-  if (loading) {
-    return (
-      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-        <CircularProgress size={60} />
-      </Container>
-    );
-  }
+  const handleCloseToast = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setToast({ ...toast, open: false });
+  };
 
-  if (!novel) {
-    return (
-      <Container sx={{ mt: 10, textAlign: 'center' }}>
-        <Typography variant="h3" color="error" fontWeight="bold" gutterBottom>
-          Novel Not Found
-        </Typography>
-        <Typography variant="h6" color="text.secondary">
-          We couldn't find a novel with the ID "{id}" in your database.
-        </Typography>
-        <Button component={Link} to="/browse" variant="contained" sx={{ mt: 4 }}>
-          Back to Browse
-        </Button>
-      </Container>
-    );
-  }
-
-  const safeChapters = novel?.chapters || [];
-  const sortedChapters = [...safeChapters].sort((a, b) => 
-    sortAsc ? a.id - b.id : b.id - a.id
+  if (loading) return <Container sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}><CircularProgress size={60} /></Container>;
+  
+  if (!novel) return (
+    <Container sx={{ mt: 10, textAlign: 'center' }}>
+      <Typography variant="h3" color="error" fontWeight="bold" gutterBottom>Novel Not Found</Typography>
+      <Button component={Link} to="/browse" variant="contained" sx={{ mt: 4 }}>Back to Browse</Button>
+    </Container>
   );
+
+  const sortedChapters = [...chapters].sort((a, b) => {
+    const numA = a.chapterNumber || parseInt(a.id);
+    const numB = b.chapterNumber || parseInt(b.id);
+    return sortAsc ? numA - numB : numB - numA;
+  });
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 8 }}>
@@ -98,41 +101,20 @@ const NovelDetails = () => {
           </Grid>
 
           <Grid item xs={12} sm={8} md={9}>
-            <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>
-              {novel.title}
-            </Typography>
-            
-            <Typography variant="subtitle1" color="primary" sx={{ mb: 2 }}>
-              Author: {novel.author} | Status: {novel.status}
-            </Typography>
-
+            <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>{novel.title}</Typography>
+            <Typography variant="subtitle1" color="primary" sx={{ mb: 2 }}>Author: {novel.author} | Status: {novel.status}</Typography>
             <Box sx={{ mb: 3 }}>
-              {novel.genres?.map(genre => (
-                <Chip key={genre} label={genre} sx={{ mr: 1, mb: 1 }} />
-              ))}
+              {novel.genres?.map(genre => <Chip key={genre} label={genre} sx={{ mr: 1, mb: 1 }} />)}
             </Box>
-
             <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-              <Button 
-                variant="contained" 
-                color="primary"
-                component={Link}
-                to={`/novels/${novel.id}/${sortedChapters[0]?.id || 1}`}
-                disabled={sortedChapters.length === 0}
-              >
-                Read First Chapter
-              </Button>
-              <Button variant="outlined" color="primary" onClick={handleAddToLibrary}>
-                Add to Library
+              <Button variant="contained" color="primary" component={Link} to={`/novels/${novel.id}/${sortedChapters[0]?.id || 1}`} disabled={sortedChapters.length === 0}>Read First Chapter</Button>
+              <Button variant={isInLibrary ? "contained" : "outlined"} color={isInLibrary ? "error" : "primary"} onClick={toggleLibrary} sx={{ width: '200px' }}>
+                {isInLibrary ? "Remove from Library" : "Add to Library"}
               </Button>
             </Box>
-
             <Divider sx={{ mb: 2 }} />
-            
             <Typography variant="h6" gutterBottom>Synopsis</Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 }}>
-              {novel.synopsis}
-            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8 }}>{novel.synopsis}</Typography>
           </Grid>
         </Grid>
       </Paper>
@@ -144,36 +126,21 @@ const NovelDetails = () => {
             Sort: {sortAsc ? "Ascending ⬇" : "Descending ⬆"}
           </Button>
         </Box>
-        
         <Grid container spacing={2}>
           {sortedChapters.map((chapter) => (
             <Grid item xs={12} sm={6} md={4} key={chapter.id}>
-              <Box 
-                component={Link}
-                to={`/novels/${novel.id}/${chapter.id}`}
-                sx={{ 
-                  display: 'block',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  p: 2, 
-                  border: '1px solid',
-                  borderColor: 'divider',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  '&:hover': { bgcolor: 'action.hover', color: 'primary.main', borderColor: 'primary.main' }
-                }}
-              >
+              <Box component={Link} to={`/novels/${novel.id}/${chapter.id}`} sx={{ display: 'block', textDecoration: 'none', color: 'inherit', p: 2, border: '1px solid', borderColor: 'divider', borderRadius: '4px', '&:hover': { bgcolor: 'action.hover', color: 'primary.main', borderColor: 'primary.main' }}}>
                 <Typography noWrap>{chapter.title}</Typography>
               </Box>
             </Grid>
           ))}
-          {sortedChapters.length === 0 && (
-            <Grid item xs={12}>
-              <Typography color="text.secondary">No chapters available yet.</Typography>
-            </Grid>
-          )}
+          {sortedChapters.length === 0 && <Grid item xs={12}><Typography color="text.secondary">No chapters available yet.</Typography></Grid>}
         </Grid>
       </Paper>
+
+      <Snackbar open={toast.open} autoHideDuration={3000} onClose={handleCloseToast} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert onClose={handleCloseToast} severity={toast.severity} sx={{ width: '100%' }}>{toast.message}</Alert>
+      </Snackbar>
     </Container>
   );
 };

@@ -12,7 +12,8 @@ import NovelDetails from './components/NovelDetails';
 import ChapterReader from './components/ChapterReader';
 import Home from './components/Home';     
 import Search from './components/Search'; 
-
+import AdminDashboard from './components/AdminDashboard';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -35,13 +36,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/browse" element={<Browse />} />
+          <Route path="/browse/:pageNumber" element={<Browse />} />
           <Route path="/library" element={<Library />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/novels/:id" element={<NovelDetails />} />
           <Route path="/novels/:novelId/:chapterId" element={<ChapterReader />} />
-          
+          <Route path="/admin" element={<AdminRoute>
+        <AdminDashboard />
+      </AdminRoute>}/>
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

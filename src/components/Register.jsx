@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { TextField, Button, Container, Typography, Box, Alert } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Alert, Paper } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 
 const validationSchema = yup.object({
@@ -15,11 +15,7 @@ const Register = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const formik = useFormik({
-    initialValues: {
-      username: '',
-      email: '',
-      password: '',
-    },
+    initialValues: { username: '', email: '', password: '' },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
@@ -30,10 +26,13 @@ const Register = () => {
           setErrorMsg('An account with this email already exists.');
           return;
         }
+        
+        const newUserPayload = { ...values, role: 'user' };
+
         const res = await fetch('http://localhost:5174/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
+          body: JSON.stringify(newUserPayload),
         });
 
         if (res.ok) {
@@ -47,14 +46,14 @@ const Register = () => {
 
   return (
     <Container maxWidth="xs">
-      <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', bgcolor: 'white', p: 4, borderRadius: 2 }}>
-        <Typography component="h1" variant="h5" color="primary">
+      <Paper sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4, borderRadius: 2, boxShadow: 3 }}>
+        <Typography component="h1" variant="h5" color="primary" fontWeight="bold">
           Register for MugNovel
         </Typography>
         
         {errorMsg && <Alert severity="error" sx={{ width: '100%', mt: 2 }}>{errorMsg}</Alert>}
 
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1, width: '100%' }}>
           <TextField
             fullWidth margin="normal" id="username" name="username" label="Username"
             value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur}
@@ -73,14 +72,14 @@ const Register = () => {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
           />
-          <Button color="primary" variant="contained" fullWidth type="submit" sx={{ mt: 3, mb: 2 }}>
+          <Button color="primary" variant="contained" fullWidth size="large" type="submit" sx={{ mt: 3, mb: 2 }}>
             Register
           </Button>
-          <Typography variant="body2" align="center">
-            Already have an account? <Link to="/login">Sign In here</Link>
+          <Typography variant="body2" align="center" color="text.secondary">
+            Already have an account? <Link to="/login" style={{ color: '#747bff' }}>Sign In here</Link>
           </Typography>
         </Box>
-      </Box>
+      </Paper>
     </Container>
   );
 };

@@ -1,10 +1,11 @@
 {
   "users": [
     {
+      "id": "1",
       "username": "MugetsuBG",
-      "email": "asd@asd.asd",
-      "password": "sgasga",
-      "id": "Fr2zyF3Oquo"
+      "email": "test@test.com",
+      "password": "password123",
+      "role": "admin"
     }
   ],
   "novels": [
@@ -14,30 +15,281 @@
       "author": "Taleseeker",
       "status": "Ongoing",
       "genres": [
-        "Fantasy",
         "Action",
+        "Fantasy",
         "System"
       ],
-      "coverImg": "https://via.placeholder.com/200x280?text=Novel+Cover",
-      "synopsis": "When Alex woke up, he discovered he had transmigrated...",
-      "chapters": [
-        {
-          "id": "1",
-          "title": "Chapter 1: The Villain Awakens"
-        },
-        {
-          "id": "2",
-          "title": "Chapter 2: The Providence System"
-        }
-      ]
+      "coverImg": "https://www.novelhall.com/upload/images/article/20260405/god-tier-providence-system.jpg",
+      "synopsis": "When Alex woke up..."
+    },
+    {
+      "title": "fadfdas",
+      "author": "Unknown",
+      "synopsis": "adasda",
+      "coverImg": "",
+      "genres": [
+        "asas"
+      ],
+      "status": "Ongoing",
+      "id": "_XyzltQZ9qc"
+    },
+    {
+      "title": "fadfdas",
+      "author": "Unknown",
+      "synopsis": "adasda",
+      "coverImg": "",
+      "genres": [
+        "asas"
+      ],
+      "status": "Ongoing",
+      "id": "DKOx0I4zzIY"
+    },
+    {
+      "title": "asd",
+      "author": "adsads",
+      "synopsis": "adsasd",
+      "coverImg": "asd",
+      "genres": [
+        "dasds"
+      ],
+      "status": "Completed",
+      "id": "ehqXAqL46KU"
+    },
+    {
+      "title": "asd",
+      "author": "adsads",
+      "synopsis": "adsasd",
+      "coverImg": "asd",
+      "genres": [
+        "dasds"
+      ],
+      "status": "Completed",
+      "id": "e4DlA_0hF2Q"
+    },
+    {
+      "title": "asdsd",
+      "author": "sda",
+      "synopsis": "dasasda",
+      "coverImg": "",
+      "genres": [
+        "dsasd"
+      ],
+      "status": "Ongoing",
+      "id": "VY91thF3gVA"
+    },
+    {
+      "title": "asdasdasdas",
+      "author": "asda",
+      "synopsis": "dasadsasd",
+      "coverImg": "",
+      "genres": [
+        "asdasd"
+      ],
+      "status": "Completed",
+      "id": "zAUofUGZSqQ"
+    },
+    {
+      "title": "das",
+      "author": "Unknown",
+      "synopsis": "adsad",
+      "coverImg": "",
+      "genres": [
+        "das"
+      ],
+      "status": "Ongoing",
+      "id": "augcRW3jwe4"
+    },
+    {
+      "title": "ads",
+      "author": "Unknown",
+      "synopsis": "das",
+      "coverImg": "",
+      "genres": [
+        "ads"
+      ],
+      "status": "Ongoing",
+      "id": "1_lTq2YVzA0"
+    },
+    {
+      "title": "ads",
+      "author": "Unknown",
+      "synopsis": "asd",
+      "coverImg": "",
+      "genres": [
+        "das"
+      ],
+      "status": "Ongoing",
+      "id": "t2AvCZPEctM"
+    },
+    {
+      "title": "das",
+      "author": "Unknown",
+      "synopsis": "as",
+      "coverImg": "",
+      "genres": [
+        "adsdas"
+      ],
+      "status": "Ongoing",
+      "id": "KHigVGvl6t8"
+    },
+    {
+      "title": "ad",
+      "author": "Unknown",
+      "synopsis": "dadas",
+      "coverImg": "",
+      "genres": [
+        "sdasad"
+      ],
+      "status": "Ongoing",
+      "id": "avRwKZOzXvA"
+    },
+    {
+      "title": "dasads",
+      "author": "Unknown",
+      "synopsis": "asdads",
+      "coverImg": "",
+      "genres": [
+        "sads"
+      ],
+      "status": "Ongoing",
+      "id": "djJM8I2k1Iw"
+    },
+    {
+      "title": "adsdas",
+      "author": "Unknown",
+      "synopsis": "dasads",
+      "coverImg": "",
+      "genres": [
+        "adsdas"
+      ],
+      "status": "Ongoing",
+      "id": "C-BRAhXH6N0"
+    },
+    {
+      "title": "adsasdads",
+      "author": "dasadsads",
+      "synopsis": "asdaddasads",
+      "coverImg": "",
+      "genres": [
+        "dasasd"
+      ],
+      "status": "Ongoing",
+      "id": "XwLAi6Sf4tI"
+    },
+    {
+      "title": "dasasdasd",
+      "author": "Unknown",
+      "synopsis": "adsadsasd",
+      "coverImg": "",
+      "genres": [
+        "sdadas"
+      ],
+      "status": "Ongoing",
+      "id": "1PzQ7JW6vfU"
+    },
+    {
+      "title": "adsdasdasdasdsa",
+      "author": "sada",
+      "synopsis": "adsadsasdasd",
+      "coverImg": "",
+      "genres": [
+        "asdasdasdads"
+      ],
+      "status": "Ongoing",
+      "id": "y16_k47adD8"
+    },
+    {
+      "title": "asddsasdaads",
+      "author": "Unknown",
+      "synopsis": "dsasdadasdsa",
+      "coverImg": "",
+      "genres": [
+        "adsasdadsdsa"
+      ],
+      "status": "Ongoing",
+      "id": "PGaHIIZpL-k"
+    },
+    {
+      "title": "adsdasasdasd",
+      "author": "Unknown",
+      "synopsis": "asdasdsda",
+      "coverImg": "",
+      "genres": [
+        "sadasdads"
+      ],
+      "status": "Ongoing",
+      "id": "HB4czxUuiIw"
+    },
+    {
+      "title": "dsafdsa",
+      "author": "Unknown",
+      "synopsis": "asdasdadsfasfsad",
+      "coverImg": "",
+      "genres": [
+        "fdsadfas"
+      ],
+      "status": "Ongoing",
+      "id": "ToTLlKETmwI"
+    },
+    {
+      "title": "fadsfasdf",
+      "author": "Unknown",
+      "synopsis": "asdfsad",
+      "coverImg": "",
+      "genres": [
+        "sdaf"
+      ],
+      "status": "Ongoing",
+      "id": "us04cSUpSsw"
+    },
+    {
+      "title": "f",
+      "author": "Unknown",
+      "synopsis": "sad",
+      "coverImg": "",
+      "genres": [
+        "f"
+      ],
+      "status": "Ongoing",
+      "id": "PRshkYxeBJ8"
+    },
+    {
+      "title": "sda",
+      "author": "Unknown",
+      "synopsis": "f",
+      "coverImg": "",
+      "genres": [
+        "asd"
+      ],
+      "status": "Ongoing",
+      "id": "JA5-709AR7Y"
+    },
+    {
+      "title": "sad",
+      "author": "Unknown",
+      "synopsis": "d",
+      "coverImg": "",
+      "genres": [
+        "sda"
+      ],
+      "status": "Ongoing",
+      "id": "X-km-doXMOk"
     }
   ],
-  "chapterContent": [
+  "chapters": [
     {
       "id": "1",
       "novelId": "1",
-      "title": "Chapter 1",
-      "content": "“Your Majesty, Knox and I are deeply in love, and I will marry no one but him. If Your Majesty does not agree, I, Isolde, will sever all ties with the Hale family and leave this family right now!”\n\nThe sharp, unwavering declaration rang through the grand hall like a blade drawn from its sheath.\n\nAlex woke up to that voice.\n\nFor a brief instant, his mind was empty—no cultivation, no enemies, no schemes—only the echo of a woman’s resolve vibrating against marble pillars."
+      "chapterNumber": 1,
+      "title": "Chapter 1: The Awakening",
+      "content": "This is where the massive text goes..."
+    },
+    {
+      "id": "2",
+      "novelId": "1",
+      "chapterNumber": 2,
+      "title": "Chapter 2: The System",
+      "content": "More heavy text here..."
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
