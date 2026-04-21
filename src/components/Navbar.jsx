@@ -76,7 +76,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                 )}
 
                 <MenuItem component={Link} to="/library" onClick={handleMenuClose}>
-                  Saved
+                  My Library
                 </MenuItem>
                 <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
                   Sign Out

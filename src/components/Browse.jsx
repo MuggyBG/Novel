@@ -50,7 +50,7 @@ const Browse = () => {
         if (isMounted) {
           const startIndex = (currentPage - 1) * limit;
           const endIndex = startIndex + limit;
-          const paginatedNovels = allNovels.slice(startIndex, endIndex);
+          const paginatedNovels = allNovels.reverse().slice(startIndex, endIndex);
 
           setNovels(paginatedNovels);
           setTotalCount(allNovels.length);

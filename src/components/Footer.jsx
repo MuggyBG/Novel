@@ -15,7 +15,7 @@ const Footer = () => {
       }}
     >
       <Typography variant="body2" align="center">
-        © {new Date().getFullYear()} My Novel App. All rights reserved. <br />
+        © {new Date().getFullYear()} My Novel App. No rights reserved. <br />
         Made with 🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺.
       </Typography>
     </Box>

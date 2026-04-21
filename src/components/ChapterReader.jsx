@@ -60,7 +60,12 @@ const ChapterReader = () => {
 
   if (loading) return <Box display="flex" justifyContent="center" mt={10}><CircularProgress /></Box>;
   if (!chapter) return <Typography align="center" mt={10} variant="h5">Chapter not found.</Typography>;
+  Promise.all([
+      fetch(`http://localhost:5174/chapters/${nextChapterId}`).then(res => res.ok ? res.json() : null)
+    ])
+    .then(([]) => {
 
+    })
   const prevChapterId = String(parseInt(chapterId) - 1);
   const nextChapterId = String(parseInt(chapterId) + 1);
 
@@ -108,6 +113,7 @@ const ChapterReader = () => {
       </Paper>
     </Container>
   );
+  
 };
 
 export default ChapterReader;
