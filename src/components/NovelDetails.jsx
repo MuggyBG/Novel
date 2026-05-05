@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 
 const NovelDetails = () => {
-  const { id } = useParams();
+  const { novelID } = useParams();
   const [novel, setNovel] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [sortAsc, setSortAsc] = useState(true);
@@ -14,31 +14,44 @@ const NovelDetails = () => {
   const [isInLibrary, setIsInLibrary] = useState(false);
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
 
-  useEffect(() => {
+useEffect(() => {
     const currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
-    setIsInLibrary(currentLibrary.some(n => String(n.id) === String(id)));
+    setIsInLibrary(currentLibrary.some(n => String(n.novelID) === String(novelID)));
 
     setLoading(true);
-    
-    Promise.all([
-      fetch(`http://localhost:5174/novels/${id}`).then(res => res.ok ? res.json() : null),
-      fetch(`http://localhost:5174/chapters`).then(res => res.ok ? res.json() : []) // <--- Notice we removed the ?novelId= part
-    ])
-    .then(([novelData, allChaptersData]) => {
-      setNovel(novelData && Object.keys(novelData).length > 0 ? novelData : null);
-      
-      const matchingChapters = allChaptersData.filter(chapter => String(chapter.novelId) === String(id));
-      setChapters(matchingChapters);
-      
-      setLoading(false);
-    })
-    .catch(err => {
-      console.error("Error fetching data:", err);
-      setNovel(null);
-      setLoading(false);
-    });
-  }, [id]);
 
+    fetch('http://localhost:5174/novels')
+      .then(res => res.ok ? res.json() : [])
+      .then(fetchedData => {
+        const novelArray = fetchedData.data ? fetchedData.data : fetchedData;
+        const targetNovel = Array.isArray(novelArray)
+          ? novelArray.find(n => String(n.novelID) === String(novelID))
+          : null;
+
+        if (targetNovel) {
+          setNovel(targetNovel);
+          return fetch('http://localhost:5174/chapters')
+            .then(res => res.ok ? res.json() : [])
+            .then(chaptersData => {
+              const allChaptersArray = chaptersData.data ? chaptersData.data : chaptersData;
+              const matchingChapters = allChaptersArray.filter(chapter => {
+                const chNovelId = chapter.novelID || chapter.novelId;
+                return String(chNovelId) === String(targetNovel.id);
+              });
+              setChapters(matchingChapters);
+              setLoading(false);
+            });
+        }
+
+        setNovel(null);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching data:", err);
+        setNovel(null);
+        setLoading(false);
+      });
+  }, [novelID]);
   const toggleLibrary = () => {
     const user = localStorage.getItem('user');
     if (!user) {
@@ -75,9 +88,10 @@ const NovelDetails = () => {
     </Container>
   );
 
+  // Updated sorting logic to strictly use chapterNumber
   const sortedChapters = [...chapters].sort((a, b) => {
-    const numA = a.chapterNumber || parseInt(a.id);
-    const numB = b.chapterNumber || parseInt(b.id);
+    const numA = parseInt(a.chapterNumber);
+    const numB = parseInt(b.chapterNumber);
     return sortAsc ? numA - numB : numB - numA;
   });
 
@@ -107,7 +121,7 @@ const NovelDetails = () => {
               {novel.genres?.map(genre => <Chip key={genre} label={genre} sx={{ mr: 1, mb: 1 }} />)}
             </Box>
             <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-              <Button variant="contained" color="primary" component={Link} to={`/novels/${novel.id}/${sortedChapters[0]?.id || 1}`} disabled={sortedChapters.length === 0}>Read First Chapter</Button>
+              <Button variant="contained" color="primary" component={Link} to={`/novels/${novel.novelID}/${sortedChapters[0]?.chapterNumber || 1}`} disabled={sortedChapters.length === 0}>Read First Chapter</Button>
               <Button variant={isInLibrary ? "contained" : "outlined"} color={isInLibrary ? "error" : "primary"} onClick={toggleLibrary} sx={{ width: '200px' }}>
                 {isInLibrary ? "Remove from Library" : "Add to Library"}
               </Button>
@@ -129,7 +143,7 @@ const NovelDetails = () => {
         <Grid container spacing={2}>
           {sortedChapters.map((chapter) => (
             <Grid item xs={12} sm={6} md={4} key={chapter.id}>
-              <Box component={Link} to={`/novels/${novel.id}/${chapter.id}`} sx={{ display: 'block', textDecoration: 'none', color: 'inherit', p: 2, border: '1px solid', borderColor: 'divider', borderRadius: '4px', '&:hover': { bgcolor: 'action.hover', color: 'primary.main', borderColor: 'primary.main' }}}>
+              <Box component={Link} to={`/novels/${novel.novelID}/${chapter.chapterNumber}`} sx={{ display: 'block', textDecoration: 'none', color: 'inherit', p: 2, border: '1px solid', borderColor: 'divider', borderRadius: '4px', '&:hover': { bgcolor: 'action.hover', color: 'primary.main', borderColor: 'primary.main' }}}>
                 <Typography noWrap>{chapter.title}</Typography>
               </Box>
             </Grid>

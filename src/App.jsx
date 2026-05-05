@@ -42,8 +42,8 @@ function App() {
           <Route path="/library" element={<Library />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/novels/:id" element={<NovelDetails />} />
-          <Route path="/novels/:novelId/:chapterId" element={<ChapterReader />} />
+          <Route path="/novels/:novelID" element={<NovelDetails />} />
+          <Route path="/novels/:novelID/:chapterNumber" element={<ChapterReader />} />
           <Route path="/admin" element={<AdminRoute>
         <AdminDashboard />
       </AdminRoute>}/>

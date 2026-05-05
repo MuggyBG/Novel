@@ -50,7 +50,7 @@ const Library = () => {
         ) : (
           <Grid container spacing={3}>
             {readingHistory.map(record => (
-              <Grid item xs={12} sm={6} md={4} key={record.novelId}>
+              <Grid item xs={12} sm={6} md={4} key={record.novelID}>
                 <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" noWrap fontWeight="bold" color="text.primary">
@@ -66,7 +66,7 @@ const Library = () => {
                       color="primary" 
                       fullWidth
                       component={Link} 
-                      to={`/novels/${record.novelId}/${record.chapterId}`}
+                      to={`/novels/${record.novelID}/${record.chapterNumber}`}
                     >
                       Continue Reading
                     </Button>

@@ -53,18 +53,21 @@ const AdminDashboard = () => {
     const handleNovelSubmit = async (e) => {
         e.preventDefault();
 
-        let maxId = 0;
+        let maxId = 99999;
         novels.forEach((novel) => {
             const numId = parseInt(novel.id);
             if (!isNaN(numId) && numId > maxId) {
                 maxId = numId;
             }
+            console.log(maxId)
         });
 
-        const nextId = String(maxId + 1);
+        const nextId = (maxId + 1).toString();
 
         const novelPayload = {
             id: nextId,
+            ...newNovel,
+            novelID: nextId,
             ...newNovel,
             author:
                 newNovel.author.trim() === "" ? "Unknown" : newNovel.author.trim(),
@@ -72,6 +75,7 @@ const AdminDashboard = () => {
                 ? newNovel.genres.split(",").map((g) => g.trim())
                 : [],
         };
+        console.log(novelPayload)
 
         try {
             const res = await fetch("http://localhost:5174/novels", {
@@ -115,7 +119,17 @@ const AdminDashboard = () => {
             await fetch(`http://localhost:5174/novels/${novel.id}`, {
                 method: "DELETE",
             });
-            
+            const currentContinueReading = JSON.parse(localStorage.getItem('continueReading')) || [];
+            const updatedContinueReading = currentContinueReading.filter(
+                (n) => String(n.novelID) !== String(novel.id)
+            );
+            localStorage.setItem('continueReading', JSON.stringify(updatedContinueReading));
+
+            const currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+            const updatedLibrary = currentLibrary.filter(
+                (n) => String(n.novelID) !== String(novel.id)
+            );
+            localStorage.setItem('savedLibrary', JSON.stringify(updatedLibrary));
         } catch (err) {
             setToast({
                 open: true,
@@ -135,8 +149,7 @@ const AdminDashboard = () => {
         if (!deletedNovelBackup) return;
         if (deleteTimeoutRef.current) clearTimeout(deleteTimeoutRef.current);
         setShowUndo(false);
-
-        // Put the novel back into the UI and re-sort by numerical ID
+        
         setNovels((prev) => {
             const restoredList = [...prev, deletedNovelBackup];
             return restoredList.sort((a, b) => parseInt(a.id) - parseInt(b.id));
@@ -171,6 +184,7 @@ const AdminDashboard = () => {
             : `Chapter ${newChapter.chapterNumber}`;
 
         const chapterPayload = {
+            id: `${newChapter.novelId}${newChapter.chapterNumber}`,
             novelId: String(newChapter.novelId),
             chapterNumber: parseInt(newChapter.chapterNumber),
             title: formattedTitle,
@@ -231,6 +245,7 @@ const AdminDashboard = () => {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
+                            id: `${newChapter.novelId}${item.chapterNumber}`,
                             novelId: String(newChapter.novelId),
                             chapterNumber: item.chapterNumber,
                             title: formattedTitle,

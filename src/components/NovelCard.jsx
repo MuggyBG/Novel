@@ -16,7 +16,7 @@ const NovelCard = ({ novel }) => {
       }}
     >
       <CardActionArea 
-        onClick={() => navigate(`/novels/${novel.id}`)} 
+        onClick={() => navigate(`/novels/${novel.novelID}`)} 
         sx={{ 
           flexGrow: 1, 
           display: 'flex', 

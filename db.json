@@ -6,80 +6,57 @@
       "email": "test@test.com",
       "password": "password123",
       "role": "admin"
-    },
-    {
-      "username": "asd",
-      "email": "asd@asd.asd",
-      "password": "asdasdasd",
-      "role": "user",
-      "id": "4sYTDeGWiPA"
-    },
-    {
-      "username": "MugetsuBG",
-      "email": "asdasdasdasd@asd.asd",
-      "password": "asdasdasd123",
-      "role": "user",
-      "id": "yHuPL759g_A"
     }
   ],
   "novels": [
     {
-      "id": "1",
-      "title": "God-Tier Providence System",
-      "author": "Taleseeker",
-      "status": "Ongoing",
+      "id": "d0sSxbC-Y10",
+      "title": "sdad",
+      "author": "asdsadas",
+      "synopsis": "dsadsa",
+      "coverImg": "dasdas",
       "genres": [
-        "Action",
-        "Fantasy",
-        "System"
-      ],
-      "coverImg": "https://www.novelhall.com/upload/images/article/20260405/god-tier-providence-system.jpg",
-      "synopsis": "When Alex woke up..."
-    },
-    {
-      "title": "sad",
-      "author": "Unknown",
-      "synopsis": "d",
-      "coverImg": "",
-      "genres": [
-        "sda"
+        "dsadsadasdas"
       ],
       "status": "Ongoing",
-      "id": "X-km-doXMOk"
-    },
-    {
-      "id": "OrnX7MuQ-Xc",
-      "title": "Test one",
-      "author": "Mug1",
-      "synopsis": "cancer",
-      "coverImg": "https://mug.com",
-      "genres": [
-        "Cancer"
-      ],
-      "status": "Ongoing"
+      "novelID": "100000"
     }
   ],
   "chapters": [
     {
-      "id": "1",
-      "novelId": "1",
-      "chapterNumber": 1,
-      "title": "Chapter 1: The Awakening",
-      "content": "This is where the massive text goes..."
+      "id": "MjMNgzhvhkY",
+      "novelID": null,
+      "chapterNumber": 22,
+      "title": "Chapter 22 - adsa",
+      "content": "dsadasdsa"
     },
     {
-      "id": "2",
-      "novelId": "1",
-      "chapterNumber": 2,
-      "title": "Chapter 2: The System",
-      "content": "More heavy text here..."
+      "id": "mTZi6CSl7V0",
+      "novelID": null,
+      "chapterNumber": 2321321,
+      "title": "Chapter 2321321 - dasdsad",
+      "content": "asdasdsa"
     },
     {
-      "novelId": "OrnX7MuQ-Xc",
-      "chapterNumber": 1,
-      "title": "Chapter 1 - Cancer1",
-      "content": "cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer cancer ",
-      "id": "N7tW-AXgB_s"
+      "id": "heFrTrEsp2Q",
+      "novelID": "7qnGzX8lnj8",
+      "chapterNumber": 22,
+      "title": "Chapter 22 - sdasdasd",
+      "content": "dasdasdas"
+    },
+    {
+      "id": "Un3KHyfe6qM",
+      "novelID": "d0sSxbC-Y10",
+      "chapterNumber": 22,
+      "title": "Chapter 22 - aadds",
+      "content": "sasasdaasd"
+    },
+    {
+      "id": "nL3sh27iId8",
+      "novelId": "d0sSxbC-Y10",
+      "chapterNumber": 23,
+      "title": "Chapter 23 - 23",
+      "content": "23 67 67 67"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
