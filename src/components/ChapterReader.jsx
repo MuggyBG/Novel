@@ -13,6 +13,8 @@ const ChapterReader = () => {
   const [loading, setLoading] = useState(true);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrev, setHasPrev] = useState(false); 
+  const [nextChapterNumber, setNextChapterNumber] = useState(null);
+  const [prevChapterNumber, setPrevChapterNumber] = useState(null);
   
   const [fontSize, setFontSize] = useState(18);
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -63,13 +65,18 @@ const ChapterReader = () => {
         const currentChapter = novelChaptersMap[parseInt(chapterNum, 10)];
         setChapter(currentChapter || null);
         
-        // Check if next chapter exists
-        const nextChapterNum = parseInt(chapterNum, 10) + 1;
-        setHasNext(Boolean(novelChaptersMap[nextChapterNum]));
-        
-        // Check if previous chapter exists
-        const prevChapterNum = parseInt(chapterNum, 10) - 1;
-        setHasPrev(prevChapterNum >= 1 && Boolean(novelChaptersMap[prevChapterNum]));
+        // Determine nearest available previous and next chapters by chapter number
+        const chapterNumbers = Object.keys(novelChaptersMap)
+          .map(num => parseInt(num, 10))
+          .filter(num => !Number.isNaN(num))
+          .sort((a, b) => a - b);
+        const currentNumber = parseInt(chapterNum, 10);
+        const nextNumber = chapterNumbers.find(num => num > currentNumber) || null;
+        const prevNumber = [...chapterNumbers].reverse().find(num => num < currentNumber) || null;
+        setHasNext(nextNumber !== null);
+        setHasPrev(prevNumber !== null);
+        setNextChapterNumber(nextNumber);
+        setPrevChapterNumber(prevNumber);
         
         setLoading(false);
       })
@@ -118,14 +125,13 @@ const ChapterReader = () => {
         </Box>
 
         <Box display="flex" justifyContent="space-between" mt={8} pt={3} borderTop="1px solid #3f3f5a">
-          {/* Navigate using the clean URL chapter numbers */}
-          <Button disabled={!hasPrev} onClick={() => navigate(`/novels/${novelID}/${currentNum - 1}`)}>
+          <Button disabled={!hasPrev} onClick={() => navigate(`/novels/${novelID}/${prevChapterNumber}`)}>
             « Prev
           </Button>
           <Button onClick={() => navigate(`/novels/${novelID}`)}>
             Index
           </Button>
-          <Button disabled={!hasNext} onClick={() => navigate(`/novels/${novelID}/${currentNum + 1}`)}>
+          <Button disabled={!hasNext} onClick={() => navigate(`/novels/${novelID}/${nextChapterNumber}`)}>
             Next »
           </Button>
         </Box>

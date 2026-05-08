@@ -125,11 +125,21 @@ const AdminDashboard = () => {
             );
             localStorage.setItem('continueReading', JSON.stringify(updatedContinueReading));
 
-            const currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
-            const updatedLibrary = currentLibrary.filter(
-                (n) => String(n.novelID) !== String(novel.id)
-            );
-            localStorage.setItem('savedLibrary', JSON.stringify(updatedLibrary));
+                        const savedLibraryRaw = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+                        if (Array.isArray(savedLibraryRaw)) {
+                            const updatedLibrary = savedLibraryRaw.filter(
+                                (n) => String(n.novelID) !== String(novel.id)
+                            );
+                            localStorage.setItem('savedLibrary', JSON.stringify(updatedLibrary));
+                        } else {
+                            const updatedLibrary = {};
+                            Object.entries(savedLibraryRaw).forEach(([key, library]) => {
+                                updatedLibrary[key] = Array.isArray(library)
+                                    ? library.filter((n) => String(n.novelID) !== String(novel.id))
+                                    : library;
+                            });
+                            localStorage.setItem('savedLibrary', JSON.stringify(updatedLibrary));
+                        }
         } catch (err) {
             setToast({
                 open: true,

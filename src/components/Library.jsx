@@ -8,10 +8,14 @@ const Library = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+    const savedLibraryRaw = JSON.parse(localStorage.getItem('savedLibrary')) || {};
+    const saved = Array.isArray(savedLibraryRaw)
+      ? savedLibraryRaw
+      : (user?.id ? savedLibraryRaw[user.id] || [] : []);
     setSavedLibrary(saved);
 
-    const historyObj = JSON.parse(localStorage.getItem('readingHistory')) || {};
+    const historyRaw = JSON.parse(localStorage.getItem('readingHistory')) || {};
+    const historyObj = user?.id && historyRaw[user.id] ? historyRaw[user.id] : historyRaw;
     const historyArray = Object.values(historyObj).sort((a, b) => {
       return new Date(b.lastReadDate) - new Date(a.lastReadDate);
     });
@@ -93,7 +97,7 @@ const Library = () => {
             {savedLibrary.map(novel => (
               <Grid item xs={12} sm={6} md={3} key={novel.id}>
                 <Card>
-                  <CardActionArea component={Link} to={`/novels/${novel.id}`}>
+                  <CardActionArea component={Link} to={`/novels/${novel.novelID}`}>
                     <CardContent>
                       <Typography variant="h6" noWrap fontWeight="bold" color="text.primary">
                         {novel.title}

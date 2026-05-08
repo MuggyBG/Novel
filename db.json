@@ -6,6 +6,13 @@
       "email": "test@test.com",
       "password": "password123",
       "role": "admin"
+    },
+    {
+      "username": "MuggyBG",
+      "email": "ass@ass.ass",
+      "password": "assass",
+      "role": "user",
+      "id": "r0gibE_iDuA"
     }
   ],
   "novels": [

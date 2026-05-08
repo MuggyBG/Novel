@@ -15,8 +15,12 @@ const NovelDetails = () => {
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
 
 useEffect(() => {
-    const currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
-    setIsInLibrary(currentLibrary.some(n => String(n.novelID) === String(novelID)));
+    const user = JSON.parse(localStorage.getItem('user'));
+    const savedLibraryRaw = JSON.parse(localStorage.getItem('savedLibrary')) || {};
+    const currentLibrary = Array.isArray(savedLibraryRaw)
+      ? savedLibraryRaw
+      : (user?.id ? savedLibraryRaw[user.id] || [] : []);
+    setIsInLibrary(user ? currentLibrary.some(n => String(n.novelID) === String(novelID)) : false);
 
     setLoading(true);
 
@@ -53,16 +57,19 @@ useEffect(() => {
       });
   }, [novelID]);
   const toggleLibrary = () => {
-    const user = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
       setToast({ open: true, message: 'Please sign in to manage your library!', severity: 'warning' });
       return;
     }
 
-    let currentLibrary = JSON.parse(localStorage.getItem('savedLibrary')) || [];
+    let savedLibraryRaw = JSON.parse(localStorage.getItem('savedLibrary')) || {};
+    let currentLibrary = Array.isArray(savedLibraryRaw)
+      ? savedLibraryRaw
+      : (savedLibraryRaw[user.id] || []);
     
     if (isInLibrary) {
-      currentLibrary = currentLibrary.filter(n => String(n.id) !== String(novel.id));
+      currentLibrary = currentLibrary.filter(n => String(n.novelID || n.id) !== String(novel.novelID || novel.id));
       setIsInLibrary(false);
       setToast({ open: true, message: 'Removed from Library', severity: 'info' });
     } else {
@@ -70,8 +77,12 @@ useEffect(() => {
       setIsInLibrary(true);
       setToast({ open: true, message: 'Added to Library!', severity: 'success' });
     }
-    
-    localStorage.setItem('savedLibrary', JSON.stringify(currentLibrary));
+    if (Array.isArray(savedLibraryRaw)) {
+      savedLibraryRaw = { [user.id]: currentLibrary };
+    } else {
+      savedLibraryRaw[user.id] = currentLibrary;
+    }
+    localStorage.setItem('savedLibrary', JSON.stringify(savedLibraryRaw));
   };
 
   const handleCloseToast = (event, reason) => {
