@@ -54,7 +54,7 @@ const Library = () => {
         ) : (
           <Grid container spacing={3}>
             {readingHistory.map(record => (
-              <Grid item xs={12} sm={6} md={4} key={record.novelID}>
+              <Grid item xs={12} sm={6} md={4} key={record.novelID || record.id}> 
                 <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" noWrap fontWeight="bold" color="text.primary">
@@ -70,7 +70,7 @@ const Library = () => {
                       color="primary" 
                       fullWidth
                       component={Link} 
-                      to={`/novels/${record.novelID}/${record.chapterNumber}`}
+                      to={`/novels/${record.id || record.novelID || record.novelId}/${record.chapterNumber}`}
                     >
                       Continue Reading
                     </Button>
@@ -94,10 +94,12 @@ const Library = () => {
           </Typography>
         ) : (
           <Grid container spacing={3}>
-            {savedLibrary.map(novel => (
-              <Grid item xs={12} sm={6} md={3} key={novel.id}>
-                <Card>
-                  <CardActionArea component={Link} to={`/novels/${novel.novelID}`}>
+            {savedLibrary.map(novel => {
+              const routeId = novel.id || novel.novelID;
+              return (
+                <Grid item xs={12} sm={6} md={3} key={routeId}>
+                  <Card>
+                    <CardActionArea component={Link} to={`/novels/${routeId}`}>
                     <CardContent>
                       <Typography variant="h6" noWrap fontWeight="bold" color="text.primary">
                         {novel.title}
@@ -109,9 +111,9 @@ const Library = () => {
                   </CardActionArea>
                 </Card>
               </Grid>
-            ))}
+            );})}
           </Grid>
-        )}
+        )};
       </Box>
     </Container>
   );

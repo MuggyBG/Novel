@@ -20,7 +20,7 @@ useEffect(() => {
     const currentLibrary = Array.isArray(savedLibraryRaw)
       ? savedLibraryRaw
       : (user?.id ? savedLibraryRaw[user.id] || [] : []);
-    setIsInLibrary(user ? currentLibrary.some(n => String(n.novelID) === String(novelID)) : false);
+    setIsInLibrary(user ? currentLibrary.some(n => String(n.novelID || n.id) === String(novelID)) : false);
 
     setLoading(true);
 
@@ -29,7 +29,7 @@ useEffect(() => {
       .then(fetchedData => {
         const novelArray = fetchedData.data ? fetchedData.data : fetchedData;
         const targetNovel = Array.isArray(novelArray)
-          ? novelArray.find(n => String(n.novelID) === String(novelID))
+          ? novelArray.find(n => String(n.id) === String(novelID) || String(n.novelID) === String(novelID))
           : null;
 
         if (targetNovel) {
@@ -90,6 +90,8 @@ useEffect(() => {
     setToast({ ...toast, open: false });
   };
 
+  const routeNovelId = novel?.id || novel?.novelID;
+
   if (loading) return <Container sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}><CircularProgress size={60} /></Container>;
   
   if (!novel) return (
@@ -132,7 +134,7 @@ useEffect(() => {
               {novel.genres?.map(genre => <Chip key={genre} label={genre} sx={{ mr: 1, mb: 1 }} />)}
             </Box>
             <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-              <Button variant="contained" color="primary" component={Link} to={`/novels/${novel.novelID}/${sortedChapters[0]?.chapterNumber || 1}`} disabled={sortedChapters.length === 0}>Read First Chapter</Button>
+              <Button variant="contained" color="primary" component={Link} to={`/novels/${routeNovelId}/${sortedChapters[0]?.chapterNumber || 1}`} disabled={sortedChapters.length === 0}>Read First Chapter</Button>
               <Button variant={isInLibrary ? "contained" : "outlined"} color={isInLibrary ? "error" : "primary"} onClick={toggleLibrary} sx={{ width: '200px' }}>
                 {isInLibrary ? "Remove from Library" : "Add to Library"}
               </Button>
@@ -154,7 +156,7 @@ useEffect(() => {
         <Grid container spacing={2}>
           {sortedChapters.map((chapter) => (
             <Grid item xs={12} sm={6} md={4} key={chapter.id}>
-              <Box component={Link} to={`/novels/${novel.novelID}/${chapter.chapterNumber}`} sx={{ display: 'block', textDecoration: 'none', color: 'inherit', p: 2, border: '1px solid', borderColor: 'divider', borderRadius: '4px', '&:hover': { bgcolor: 'action.hover', color: 'primary.main', borderColor: 'primary.main' }}}>
+              <Box component={Link} to={`/novels/${routeNovelId}/${chapter.chapterNumber}`} sx={{ display: 'block', textDecoration: 'none', color: 'inherit', p: 2, border: '1px solid', borderColor: 'divider', borderRadius: '4px', '&:hover': { bgcolor: 'action.hover', color: 'primary.main', borderColor: 'primary.main' }}}>
                 <Typography noWrap>{chapter.title}</Typography>
               </Box>
             </Grid>

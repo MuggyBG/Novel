@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NovelCard = ({ novel }) => {
   const navigate = useNavigate();
+  const routeId = novel.id || novel.novelID;
 
   return (
     <Card 
@@ -16,7 +17,7 @@ const NovelCard = ({ novel }) => {
       }}
     >
       <CardActionArea 
-        onClick={() => navigate(`/novels/${novel.novelID}`)} 
+        onClick={() => navigate(`/novels/${routeId}`)} 
         sx={{ 
           flexGrow: 1, 
           display: 'flex', 

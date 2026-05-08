@@ -34,9 +34,9 @@ const ChapterReader = () => {
       .then(novelsData => {
         const novelsArray = novelsData.data ? novelsData.data : novelsData;
         const novelData = Array.isArray(novelsArray)
-          ? novelsArray.find(n => String(n.novelID) === String(novelID))
+          ? novelsArray.find(n => String(n.id) === String(novelID) || String(n.novelID) === String(novelID))
           : null;
-        internalNovelId = novelData?.id;
+        internalNovelId = novelData?.id || novelData?.novelID;
         setNovel(novelData);
         if (!novelData) {
           setLoading(false);
@@ -91,6 +91,8 @@ const ChapterReader = () => {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
   const resetSettings = () => { setFontSize(18); setIsDarkMode(true); };
 
+  const routeNovelId = novel?.id || novel?.novelID;
+
   if (loading) return <Box display="flex" justifyContent="center" mt={10}><CircularProgress /></Box>;
   if (!chapter) return <Typography align="center" mt={10} variant="h5">Chapter not found.</Typography>;
 
@@ -100,15 +102,28 @@ const ChapterReader = () => {
     <Container maxWidth="md" sx={{ mt: 4, mb: 8 }}>
       <Breadcrumbs sx={{ mb: 3 }}>
         <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link>
-        <Link to={`/novels/${novelID}`} style={{ color: 'inherit', textDecoration: 'none' }}>{novel?.title}</Link>
+        <Link to={`/novels/${routeNovelId}`} style={{ color: 'inherit', textDecoration: 'none' }}>{novel?.title}</Link>
         <Typography color="text.primary">{chapter.title}</Typography>
       </Breadcrumbs>
 
       <Paper sx={{ p: { xs: 2, md: 5 }, bgcolor: isDarkMode ? '#1e1e2f' : '#f5f5f5', color: isDarkMode ? '#c8c8d0' : '#111111', minHeight: '100vh', transition: 'all 0.3s' }}>
-        <Box textAlign="center" mb={4}>
+        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
           <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom sx={{ color: isDarkMode ? 'white' : 'black' }}>
             {chapter.title}
           </Typography>
+          <Box display="flex" justifyContent="center" width="100%">
+            <ButtonGroup variant="outlined" size="small">
+              <Button disabled={!hasPrev} onClick={() => navigate(`/novels/${routeNovelId}/${prevChapterNumber}`)}>
+                « Prev
+              </Button>
+              <Button onClick={() => navigate(`/novels/${routeNovelId}`)}>
+                Index
+              </Button>
+              <Button disabled={!hasNext} onClick={() => navigate(`/novels/${routeNovelId}/${nextChapterNumber}`)}>
+                Next »
+              </Button>
+            </ButtonGroup>
+          </Box>
         </Box>
 
         <Box display="flex" justifyContent="center" mb={4}>
@@ -125,17 +140,35 @@ const ChapterReader = () => {
         </Box>
 
         <Box display="flex" justifyContent="space-between" mt={8} pt={3} borderTop="1px solid #3f3f5a">
-          <Button disabled={!hasPrev} onClick={() => navigate(`/novels/${novelID}/${prevChapterNumber}`)}>
+          <Button disabled={!hasPrev} onClick={() => navigate(`/novels/${routeNovelId}/${prevChapterNumber}`)}>
             « Prev
           </Button>
-          <Button onClick={() => navigate(`/novels/${novelID}`)}>
+          <Button onClick={() => navigate(`/novels/${routeNovelId}`)}>
             Index
           </Button>
-          <Button disabled={!hasNext} onClick={() => navigate(`/novels/${novelID}/${nextChapterNumber}`)}>
+          <Button disabled={!hasNext} onClick={() => navigate(`/novels/${routeNovelId}/${nextChapterNumber}`)}>
             Next »
           </Button>
         </Box>
       </Paper>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 1300,
+          borderRadius: '50%',
+          minWidth: 0,
+          width: 52,
+          height: 52,
+          boxShadow: 3,
+        }}
+      >
+        Top
+      </Button>
     </Container>
   );
 };
