@@ -14,28 +14,6 @@ const Browse = () => {
   const currentPage = parseInt(pageNumber) || 1;
   const limit = 20;
 
-  /*useEffect(() => {
-    setLoading(true);
-    const loadData = async () => {
-        try {
-            const res = await fetch(`http://localhost:5174/novels?_page=${currentPage}&_limit=${limit}`);
-            const count = res.headers.get('X-Total-Count');
-            const data = await res.json();
-            
-            setTotalCount(parseInt(count) || 0);
-            setNovels(Array.isArray(data) ? data : []);
-        } catch (error) {
-            console.error("Fetch failed", error);
-            setNovels([]);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    loadData();
-  }, [currentPage]);
-*/
-
   useEffect(() => {
     let isMounted = true;
     setLoading(true);

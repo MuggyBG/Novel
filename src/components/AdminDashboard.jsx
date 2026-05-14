@@ -15,6 +15,7 @@ import {
     ListItemText,
     Divider,
 } from "@mui/material";
+import { sanitizeContentForJSON, isContentJSONSafe } from "../utils/encodingHelpers";
 
 const AdminDashboard = () => {
     const [novels, setNovels] = useState([]);
@@ -53,21 +54,28 @@ const AdminDashboard = () => {
     const handleNovelSubmit = async (e) => {
         e.preventDefault();
 
-        let maxId = 99999;
-        novels.forEach((novel) => {
-            const numId = parseInt(novel.id);
-            if (!isNaN(numId) && numId > maxId) {
-                maxId = numId;
+        const generateId = () => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+            let result = '';
+            for (let i = 0; i < 12; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
             }
-            console.log(maxId)
-        });
+            return result;
+        };
 
-        const nextId = (maxId + 1).toString();
+        const existingNovelIDs = novels.map(novel => parseInt(novel.novelID)).filter(id => !isNaN(id)).sort((a, b) => a - b);
+        let nextNovelID = 100000;
+        for (let i = 0; i < existingNovelIDs.length; i++) {
+            if (existingNovelIDs[i] === nextNovelID) {
+                nextNovelID++;
+            } else if (existingNovelIDs[i] > nextNovelID) {
+                break;
+            }
+        }
 
         const novelPayload = {
-            id: nextId,
-            ...newNovel,
-            novelID: nextId,
+            id: generateId(),
+            novelID: nextNovelID.toString(),
             ...newNovel,
             author:
                 newNovel.author.trim() === "" ? "Unknown" : newNovel.author.trim(),
@@ -193,12 +201,22 @@ const AdminDashboard = () => {
             ? `Chapter ${newChapter.chapterNumber} - ${newChapter.title.trim()}`
             : `Chapter ${newChapter.chapterNumber}`;
 
+        const contentString = sanitizeContentForJSON(newChapter.content);
+        if (!isContentJSONSafe(contentString)) {
+            setToast({
+                open: true,
+                message: "Chapter content contains invalid characters. Please review and try again.",
+                severity: "error",
+            });
+            return;
+        }
+
         const chapterPayload = {
             id: `${newChapter.novelId}${newChapter.chapterNumber}`,
-            novelId: String(newChapter.novelId),
+            novelID: String(newChapter.novelId),
             chapterNumber: parseInt(newChapter.chapterNumber),
             title: formattedTitle,
-            content: newChapter.content,
+            content: contentString,
         };
 
         try {
@@ -251,15 +269,17 @@ const AdminDashboard = () => {
                         ? `Chapter ${item.chapterNumber} - ${item.title}`
                         : `Chapter ${item.chapterNumber}`;
 
+                    const contentString = sanitizeContentForJSON(item.content);
+
                     await fetch("http://localhost:5174/chapters", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             id: `${newChapter.novelId}${item.chapterNumber}`,
-                            novelId: String(newChapter.novelId),
+                            novelID: String(newChapter.novelId),
                             chapterNumber: item.chapterNumber,
                             title: formattedTitle,
-                            content: item.content,
+                            content: contentString,
                         }),
                     });
                 }
@@ -420,7 +440,7 @@ const AdminDashboard = () => {
                                 }}
                             >
                                 {novels.map((novel) => (
-                                    <MenuItem key={novel.id} value={novel.id}>
+                                    <MenuItem key={novel.novelID} value={novel.novelID}>
                                         {novel.title}
                                     </MenuItem>
                                 ))}
@@ -566,9 +586,9 @@ const AdminDashboard = () => {
 
             <Snackbar
                 open={showUndo}
-                autoHideDuration={5000} // 5 second timer!
+                autoHideDuration={5000} 
                 onClose={(event, reason) => {
-                    if (reason === "clickaway") return; // Prevent accidental closing
+                    if (reason === "clickaway") return; 
                     setShowUndo(false);
                 }}
                 message={`Deleted "${deletedNovelBackup?.title}"`}

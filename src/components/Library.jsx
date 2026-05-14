@@ -70,7 +70,7 @@ const Library = () => {
                       color="primary" 
                       fullWidth
                       component={Link} 
-                      to={`/novels/${record.id || record.novelID || record.novelId}/${record.chapterNumber}`}
+                      to={`/novels/${record.novelID}/${record.chapterNumber}`}
                     >
                       Continue Reading
                     </Button>
@@ -95,9 +95,9 @@ const Library = () => {
         ) : (
           <Grid container spacing={3}>
             {savedLibrary.map(novel => {
-              const routeId = novel.id || novel.novelID;
+              const routeId = novel.novelID;
               return (
-                <Grid item xs={12} sm={6} md={3} key={routeId}>
+                <Grid item xs={12} sm={6} md={3} key={novel.novelID}>
                   <Card>
                     <CardActionArea component={Link} to={`/novels/${routeId}`}>
                     <CardContent>

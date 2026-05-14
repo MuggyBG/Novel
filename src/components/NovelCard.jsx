@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NovelCard = ({ novel }) => {
   const navigate = useNavigate();
-  const routeId = novel.id || novel.novelID;
+  const routeId = novel.novelID;
 
   return (
     <Card 

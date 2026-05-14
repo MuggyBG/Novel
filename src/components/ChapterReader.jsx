@@ -36,7 +36,7 @@ const ChapterReader = () => {
         const novelData = Array.isArray(novelsArray)
           ? novelsArray.find(n => String(n.id) === String(novelID) || String(n.novelID) === String(novelID))
           : null;
-        internalNovelId = novelData?.id || novelData?.novelID;
+        internalNovelId = novelData?.novelID;
         setNovel(novelData);
         if (!novelData) {
           setLoading(false);
@@ -50,7 +50,6 @@ const ChapterReader = () => {
         
         const chapArray = allChaptersData.data ? allChaptersData.data : allChaptersData;
         
-        // Filter chapters for this novel and build a map by chapterNumber
         const novelChaptersMap = {};
         if (Array.isArray(chapArray)) {
           chapArray.forEach(ch => {
@@ -91,7 +90,7 @@ const ChapterReader = () => {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
   const resetSettings = () => { setFontSize(18); setIsDarkMode(true); };
 
-  const routeNovelId = novel?.id || novel?.novelID;
+  const routeNovelId = novel?.novelID;
 
   if (loading) return <Box display="flex" justifyContent="center" mt={10}><CircularProgress /></Box>;
   if (!chapter) return <Typography align="center" mt={10} variant="h5">Chapter not found.</Typography>;

@@ -40,7 +40,7 @@ useEffect(() => {
               const allChaptersArray = chaptersData.data ? chaptersData.data : chaptersData;
               const matchingChapters = allChaptersArray.filter(chapter => {
                 const chNovelId = chapter.novelID || chapter.novelId;
-                return String(chNovelId) === String(targetNovel.id);
+                return String(chNovelId) === String(targetNovel.novelID);
               });
               setChapters(matchingChapters);
               setLoading(false);

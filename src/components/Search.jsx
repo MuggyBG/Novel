@@ -74,9 +74,9 @@ const Search = () => {
 
       <Grid container spacing={3}>
         {results.map(novel => (
-          <Grid item xs={12} sm={6} md={3} key={novel.id}>
+          <Grid item xs={12} sm={6} md={3} key={novel.novelID}>
             <Card>
-              <CardActionArea component={Link} to={`/novels/${novel.id}`}>
+              <CardActionArea component={Link} to={`/novels/${novel.novelID}`}>
                 <CardContent>
                   <Typography variant="h6" noWrap fontWeight="bold">{novel.title}</Typography>
                   <Typography variant="body2" color="text.secondary">By {novel.author}</Typography>
