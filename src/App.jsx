@@ -31,23 +31,21 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline/>
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/browse/:pageNumber" element={<Browse />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/novels/:novelID" element={<NovelDetails />} />
-          <Route path="/novels/:novelID/:chapterNumber" element={<ChapterReader />} />
-          <Route path="/admin" element={<AdminRoute>
-        <AdminDashboard />
-      </AdminRoute>}/>
-          <Route path="*" element={<Home />} />
+          <Route path="/" element={<Home/>}/>
+          <Route path="/search" element={<Search/>}/>
+          <Route path="/browse/:pageNumber" element={<Browse/>}/>
+          <Route path="/library" element={<Library/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/novels/:novelID" element={<NovelDetails/>}/>
+          <Route path="/novels/:novelID/:chapterNumber" element={<ChapterReader/>}/>
+          <Route path="/admin" element={<AdminRoute> <AdminDashboard/></AdminRoute>}/>
+          <Route path="*" element={<Home/>}/>
         </Routes>
         
       </main>

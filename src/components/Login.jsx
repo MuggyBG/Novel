@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { TextField, Button, Container, Typography, Box, Alert, Paper } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import { API_ENDPOINTS } from '../utils/apiHelpers';
 
 const validationSchema = yup.object({
   email: yup.string().required('Email/Username is required'),
@@ -18,7 +19,7 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const res = await fetch(`http://localhost:5174/users`);
+        const res = await fetch(API_ENDPOINTS.users);
         const users = await res.json();
 
         const userMatch = users.find(u =>

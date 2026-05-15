@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, TextField, Grid, Card, CardActionArea, Typography, CardContent, CircularProgress, Box } from '@mui/material';
 import { Link, useSearchParams } from 'react-router-dom';
+import { API_ENDPOINTS } from '../utils/apiHelpers';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,7 +23,7 @@ const Search = () => {
 
     setLoading(true);
     
-    fetch(`http://localhost:5174/novels`)
+    fetch(API_ENDPOINTS.novels)
       .then(res => res.json())
       .then(data => {
         const actualNovels = Array.isArray(data) ? data : (data.data || []);
@@ -62,7 +63,7 @@ const Search = () => {
       
       {loading && (
         <Box display="flex" justifyContent="center" mt={4}>
-          <CircularProgress />
+          <CircularProgress/>
         </Box>
       )}
 

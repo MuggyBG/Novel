@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
-  Container, Typography, Grid, Box, Button, Paper, 
-  Chip, Divider, Breadcrumbs, CircularProgress, Snackbar, Alert 
-} from '@mui/material';
+import { Container, Typography, Grid, Box, Button, Paper, Chip, Divider, Breadcrumbs, CircularProgress, Snackbar, Alert} from '@mui/material';
+import { API_ENDPOINTS } from '../utils/apiHelpers';
 
 const NovelDetails = () => {
   const { novelID } = useParams();
@@ -24,7 +22,7 @@ useEffect(() => {
 
     setLoading(true);
 
-    fetch('http://localhost:5174/novels')
+    fetch(API_ENDPOINTS.novels)
       .then(res => res.ok ? res.json() : [])
       .then(fetchedData => {
         const novelArray = fetchedData.data ? fetchedData.data : fetchedData;
@@ -34,7 +32,7 @@ useEffect(() => {
 
         if (targetNovel) {
           setNovel(targetNovel);
-          return fetch('http://localhost:5174/chapters')
+          return fetch(API_ENDPOINTS.chapters)
             .then(res => res.ok ? res.json() : [])
             .then(chaptersData => {
               const allChaptersArray = chaptersData.data ? chaptersData.data : chaptersData;
@@ -101,7 +99,6 @@ useEffect(() => {
     </Container>
   );
 
-  // Updated sorting logic to strictly use chapterNumber
   const sortedChapters = [...chapters].sort((a, b) => {
     const numA = parseInt(a.chapterNumber);
     const numB = parseInt(b.chapterNumber);

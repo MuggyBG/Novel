@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { 
-  Container, Typography, Box, Button, Paper, Breadcrumbs, CircularProgress, ButtonGroup 
-} from '@mui/material';
+import { Container, Typography, Box, Button, Paper, Breadcrumbs, CircularProgress, ButtonGroup } from '@mui/material';
+import { getNovelById, getChaptersForNovel, API_ENDPOINTS } from "../utils/apiHelpers";
 
 const ChapterReader = () => {
   const { novelID, chapterNumber } = useParams();
@@ -29,7 +28,7 @@ const ChapterReader = () => {
 
     let internalNovelId = null;
 
-    fetch('http://localhost:5174/novels')
+    fetch(API_ENDPOINTS.novels)
       .then(res => res.ok ? res.json() : [])
       .then(novelsData => {
         const novelsArray = novelsData.data ? novelsData.data : novelsData;
@@ -42,7 +41,7 @@ const ChapterReader = () => {
           setLoading(false);
           return null;
         }
-        return fetch(`http://localhost:5174/chapters`)
+        return fetch(API_ENDPOINTS.chapters)
           .then(res => res.ok ? res.json() : []);
       })
       .then(allChaptersData => {
@@ -60,11 +59,9 @@ const ChapterReader = () => {
           });
         }
         
-        // Find current chapter
         const currentChapter = novelChaptersMap[parseInt(chapterNum, 10)];
         setChapter(currentChapter || null);
         
-        // Determine nearest available previous and next chapters by chapter number
         const chapterNumbers = Object.keys(novelChaptersMap)
           .map(num => parseInt(num, 10))
           .filter(num => !Number.isNaN(num))

@@ -1,21 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-    Container,
-    Typography,
-    Box,
-    TextField,
-    Button,
-    Paper,
-    Stack,
-    Snackbar,
-    Alert,
-    MenuItem,
-    List,
-    ListItem,
-    ListItemText,
-    Divider,
-} from "@mui/material";
+import { Container,  Typography, Box,TextField,Button, Paper,Stack,Snackbar,Alert,MenuItem,List,ListItem,ListItemText,Divider,} from "@mui/material";
 import { sanitizeContentForJSON, isContentJSONSafe } from "../utils/encodingHelpers";
+import { API_ENDPOINTS, getAllNovels } from "../utils/apiHelpers";
 
 const AdminDashboard = () => {
     const [novels, setNovels] = useState([]);
@@ -46,9 +32,7 @@ const AdminDashboard = () => {
     const deleteTimeoutRef = useRef(null);
 
     useEffect(() => {
-        fetch("http://localhost:5174/novels")
-            .then((res) => res.json())
-            .then((data) => setNovels(data.data ? data.data : data));
+        getAllNovels().then(setNovels);
     }, []);
 
     const handleNovelSubmit = async (e) => {
@@ -86,7 +70,7 @@ const AdminDashboard = () => {
         console.log(novelPayload)
 
         try {
-            const res = await fetch("http://localhost:5174/novels", {
+            const res = await fetch(API_ENDPOINTS.novels, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(novelPayload),
@@ -105,7 +89,7 @@ const AdminDashboard = () => {
                     genres: "",
                     status: "Ongoing",
                 });
-                fetch("http://localhost:5174/novels")
+                fetch(API_ENDPOINTS.novels)
                     .then((r) => r.json())
                     .then((d) => setNovels(d.data ? d.data : d));
             }
@@ -124,7 +108,7 @@ const AdminDashboard = () => {
         setShowUndo(true);
 
         try {
-            await fetch(`http://localhost:5174/novels/${novel.id}`, {
+            await fetch(`${API_ENDPOINTS.novels}/${novel.id}`, {
                 method: "DELETE",
             });
             const currentContinueReading = JSON.parse(localStorage.getItem('continueReading')) || [];
@@ -174,7 +158,7 @@ const AdminDashboard = () => {
         });
 
         try {
-            await fetch('http://localhost:5174/novels', {
+            await fetch(API_ENDPOINTS.novels, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(deletedNovelBackup)
@@ -220,7 +204,7 @@ const AdminDashboard = () => {
         };
 
         try {
-            const res = await fetch("http://localhost:5174/chapters", {
+            const res = await fetch(API_ENDPOINTS.chapters, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(chapterPayload),
@@ -271,7 +255,7 @@ const AdminDashboard = () => {
 
                     const contentString = sanitizeContentForJSON(item.content);
 
-                    await fetch("http://localhost:5174/chapters", {
+                    await fetch(API_ENDPOINTS.chapters, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({

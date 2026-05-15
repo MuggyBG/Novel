@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { TextField, Button, Container, Typography, Box, Alert, Paper } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import { API_ENDPOINTS } from '../utils/apiHelpers';
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -19,7 +20,7 @@ const Register = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const checkRes = await fetch(`http://localhost:5174/users?email=${values.email}`);
+        const checkRes = await fetch(`${API_ENDPOINTS.users}?email=${values.email}`);
         const existingUsers = await checkRes.json();
         
         if (existingUsers.length > 0) {
@@ -29,7 +30,7 @@ const Register = () => {
         
         const newUserPayload = { ...values, role: 'user' };
 
-        const res = await fetch('http://localhost:5174/users', {
+        const res = await fetch(API_ENDPOINTS.users, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newUserPayload),
@@ -39,7 +40,7 @@ const Register = () => {
           navigate('/login'); 
         }
       } catch (err) {
-        setErrorMsg('Server error. Is JSON Server running?');
+        setErrorMsg('Server error. Is JSON Server running??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????');
       }
     },
   });

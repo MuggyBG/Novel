@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import NovelCard from './NovelCard'; 
-
+import {getAllNovels} from '../utils/apiHelpers'
 const Home = () => {
   const [latestNovels, setLatestNovels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,10 +12,7 @@ const Home = () => {
     
     const fetchHomeNovels = async () => {
       try {
-        const res = await fetch('http://localhost:5174/novels');
-        const data = await res.json();
-        
-        const allNovels = data.data ? data.data : data;
+        const allNovels = await getAllNovels();
 
         if (isMounted) {
           setLatestNovels(allNovels.slice(0, 8)); 
@@ -42,7 +39,7 @@ const Home = () => {
 
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-          <CircularProgress />
+          <CircularProgress/>
         </Box>
       ) : (
         <Box 
@@ -55,7 +52,7 @@ const Home = () => {
         >
           {latestNovels.length > 0 ? (
             latestNovels.map(novel => (
-              <NovelCard key={novel.id} novel={novel} />
+              <NovelCard key={novel.id} novel={novel}/>
             ))
           ) : (
             <Typography variant="h6" sx={{ gridColumn: '1 / -1', textAlign: 'center', mt: 4 }}>

@@ -28,7 +28,7 @@ const NovelCard = ({ novel }) => {
         <CardMedia
           component="img"
           height="280"
-          image={novel.coverImg || 'https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png'}
+          image={novel.coverImg || 'https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg'}
           alt={novel.title}
           sx={{ objectFit: 'cover' }}
         />

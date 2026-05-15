@@ -45,7 +45,7 @@ const Library = () => {
         <Typography variant="h5" fontWeight="bold" color="text.primary" gutterBottom>
           Continue Reading
         </Typography>
-        <Divider sx={{ mb: 3 }} />
+        <Divider sx={{ mb: 3 }}/>
 
         {readingHistory.length === 0 ? (
           <Typography variant="body1" color="text.secondary">
@@ -86,7 +86,7 @@ const Library = () => {
         <Typography variant="h5" fontWeight="bold" color="text.primary" gutterBottom>
           Saved Novels
         </Typography>
-        <Divider sx={{ mb: 3 }} />
+        <Divider sx={{ mb: 3 }}/>
 
         {savedLibrary.length === 0 ? (
           <Typography variant="body1" color="text.secondary">
